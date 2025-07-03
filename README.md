@@ -1,56 +1,44 @@
 # Project_template
 
+Это шаблон для решения проектной работы. Структура этого файла повторяет структуру заданий. Заполняйте его по мере работы над решением.
+
 # Задание 1. Анализ и планирование
+
+<aside>
+
+Чтобы составить документ с описанием текущей архитектуры приложения, можно часть информации взять из описания компании и условия задания. Это нормально.
+
+</aside
 
 ### 1. Описание функциональности монолитного приложения
 
 **Управление отоплением:**
 
-- Пользователи могут управлять отоплением
-- Система поддерживает подключение датчиков к системе с помощью специалистов
-- Пользователь не может подключить датчик к системе самостоятельно
+- Пользователи могут…
+- Система поддерживает…
+- …
 
 **Мониторинг температуры:**
 
-- Пользователи могут проверять температуру в доме
+- Пользователи могут…
+- Система поддерживает…
+- …
 
 ### 2. Анализ архитектуры монолитного приложения
 
-Архитектура приложения представляет из себя монолит на GO с СУБД Postgres. Все запросы обрабатываются синхронно.
-Все запросы идут от сервера к датчику, например что бы получить данные о температуре сервер делает запрос к датчику.
+Перечислите здесь основные особенности текущего приложения: какой язык программирования используется, какая база данных, как организовано взаимодействие между компонентами и так далее.
 
 ### 3. Определение доменов и границы контекстов
 
-- Domain: User management
-  - Subdomain: authentication and authorization
-    - Context: authentication
-    - Context: authorization
-  - Subdomain: user profile management
-    - Context: user profile
-
-- Domain: Device management
-  - Subdomain: device lifecycle
-    - Context: device provisioning
-    - Context: device registration
-    - Context: device configuring
-  - Subdomain: monitoring and telemetry
-    - Context: telemetry ingestion
-	- Context: realtime monitoring 
-    - Context: alerting and notification
-
-- Domain: Scenario planing
-  - Subdomain: scenario design
-    - Context: scenario editor
-  - Subdomain: scenario execution
-    - Context: automation engine	
+Опишите здесь домены, которые вы выделили.
 
 ### **4. Проблемы монолитного решения**
 
-- длительный цикл разработки и внедрения новой функциональности
-- текущее решение плохо масштабируется
-- разработка текущего решение имеет повышенный риск возникновения ошибок в следствии чего будут повышаться косты на тестирование
-- для подключение нового датчика требуются специалисты
-- разработка монолитного приложение будет со временем увеличивать время выхода на рынок новых версий
+- …
+- …
+- …
+
+Если вы считаете, что текущее решение не вызывает проблем, аргументируйте свою позицию.
 
 ### 5. Визуализация контекста системы — диаграмма С4
 
@@ -59,7 +47,13 @@
 Чтобы добавить ссылку в файл Readme.md, нужно использовать синтаксис Markdown. Это делают так:
 
 ```markdown
-[Диаграмма контекста](https://www.planttext.com?text=TP51JyCm38Nl_HLcfo6nzSA9qz100WdGn9WuJYRrjaX972NkOFyUfwtA4EAKndxlvRExo899MkygiU88tZ7v1supmPA3q9V0dSLzGbzLmX64uOD5s4DZ4ncn7AhgmWRZseRQvE0W4lDDNIVydE-j7DeFpKgcP0MP6_RrgpMO6dwn5CdLo-lPoc6GpVDJxJ4B9Irjb-mZX-A81QrQKSeSfYNg2YORFIPwta8f0Ez03kVa6AFJHmhSvB9QdpJLJyTsVrVxZw4lbSZ-2pm6tDkm1pI6so3v2XewMaCPC3IG3GLCbhF63_dR-o-POhIQyNQmgPcjTAqdk5qzbbXjKWheoXrsd20cFjgiWEMH8NfaxRB8etN5Max88-4OHUSDvNWbDopexwYwiTmjQPGNzHzTuU-rl_YMZjkc6-KVNyywMPFkXcOTLvlLEUY7KJguNoBX0hxGYlxbRm00)
+[Текст ссылки](URL)
+```
+
+Замените `Текст ссылки` текстом, который хотите использовать для ссылки. Вместо `URL` вставьте адрес, на который должна вести ссылка. Например:
+
+```markdown
+[Посетите Яндекс](https://ya.ru/)
 ```
 
 # Задание 2. Проектирование микросервисной архитектуры
