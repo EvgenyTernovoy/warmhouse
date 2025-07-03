@@ -1,0 +1,443 @@
+
+openapi: 3.0.0
+info:
+  title: WarmHouse API
+  version: 1.0.0
+
+paths:
+  /api/v0/selfperson:
+    get:
+      tags:
+      - Users
+      summary: Get user self data
+      responses:
+        '200':
+          description: A user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Unauthorized
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '403':
+          description: Forbiden
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+                
+  /api/v0/register:     
+    post:
+      tags: 
+        - Users
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+
+  /api/v0/devices/{uid}:
+    get:
+      tags:
+        - Devices
+      summary: Get device by id
+      parameters:
+        - in: path
+          name: uid
+          schema:
+            type: string
+          required: true
+          description: UUID of the device to get
+      responses:
+        '200':
+          description: Device data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '404':
+          description: Device not found
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Unauthorized
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '403':
+          description: Forbiden
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+                
+  /api/v0/devices/register:                
+    post:
+      tags: 
+        - Devices
+      summary: Register a new device
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRegister'
+      responses:
+        '200':
+          description: Device registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Unauthorized
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '403':
+          description: Forbiden
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+                
+  /api/v0/devices/provision:                
+    post:
+      tags: 
+        - Devices
+      summary: Provision a new device
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceProvision'
+      responses:
+        '201':
+          description: Device provisioned
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Unauthorized
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '403':
+          description: Forbiden
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+
+  /api/v0/scenarios:
+    get:
+      tags: 
+        - Scenarios
+      summary: Get user scenarios
+      parameters: 
+        - in: query
+          name: device_id
+          schema:
+            type: string
+            format: UUID
+          required: false
+          description: UUID of the target device
+      responses:
+        '200':
+          description: A list of scenarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scenario'
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Unauthorized
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '403':
+          description: Forbiden
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+    post:
+      tags: 
+        - Scenarios
+      summary: Create a new scenario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScenarioCreate'
+      responses:
+        '201':
+          description: Scenario created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scenario'
+        '400':
+          description: Bad request
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '401':
+          description: Unauthorized
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '403':
+          description: Forbiden
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorRequest'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        first_name:
+          type: string
+        last_name:
+          type: string
+        passwordHash:
+          type: string
+      required: [uid, email, passwordHash]
+      
+    UserRegister:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required: [email, password]
+
+    Device:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uuid
+        room_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        status:
+          type: string
+        description:
+          type: string
+        settings:
+          type: object
+      required: [uid, room_id, name, settings]
+      
+    DeviceRegister:
+      type: object
+      properties:
+        room_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+      required: [name]
+      
+    DeviceProvision:
+      type: object
+      properties:
+        token:
+          type: string
+      required: [token]
+
+    TelemetryData:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        device_id:
+          type: string
+          format: uuid
+        metric:
+          type: string
+        value:
+          type: number
+        unit:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        received_at:
+          type: string
+          format: date-time
+      required: [id, device_id, metric, value, timestamp]
+
+    Scenario:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uuid
+        device_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        condition:
+          type: string
+      required: [uid, device_id, name, condition]
+      
+    ScenarioCreate:
+      type: object
+      properties:
+        device_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        condition:
+          type: string
+        action_id: 
+          type: string
+          format: uuid
+      required: [device_id, name, condition]
+      
+    ErrorRequest:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            description:
+              type: string
+            stacktrace:
+              type: string
+
+    Action:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        scenario_id:
+          type: string
+          format: uuid
+        type:
+          type: string
+        device_id:
+          type: string
+          format: uuid
+        parameters:
+          type: object
+        delay_seconds:
+          type: integer
+      required: [id, scenario_id, type, device_id, parameters]
