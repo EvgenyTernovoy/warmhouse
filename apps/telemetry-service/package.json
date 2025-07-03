@@ -1,0 +1,23 @@
+{
+  "name": "telemetry-service",
+  "version": "0.0.1",
+  "description": "Telemetry service for smart home",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "ts-node index.ts"
+  },
+  "author": "Eugeny Ternovoy",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/postgres": "^6.0.2",
+    "fastify": "^5.4.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "@types/pg": "^8.15.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
