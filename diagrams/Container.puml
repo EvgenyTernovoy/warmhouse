@@ -1,0 +1,55 @@
+@startuml
+title WarmHouse Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+
+Person(user, "User", "A user of the WarmHouse application")
+System(WarmHouseSystem, "WarmHouse System", "System managing accounts, devices and scenarios")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+
+  Container(WebApp, "Single Page Application", "Typescript, React", "Allows users to manage their devices, scenarios and accounts")
+  
+  Container_Boundary(UserService, "User Management Service") {
+    Container(UserManagement, "User management", "Python, FastAPI", "Stores user data, authentication and registration")
+    ContainerDb(UserDB, "User database", "PostgreSQL", "Stores user data")
+  }
+  
+  Container(Notification, "Notification service", "Python, FastAPI", "Sends emails to users")
+  
+  Container_Boundary(ScenarioService, "Scenario Planning Service") { 
+    Container(ScenarioPlanning, "Scenario Planning", "Python, FastAPI", "Edit and run user-defined scenarios")
+    ContainerDb(ScenarioDB, "Scenario database", "PostgreSQL", "Stores scenario config and data")
+  }
+  
+  Container(messageQueue, "Message Queue", "Kafka", "Transports telemetry events for async processing")
+  
+  Container_Boundary(DeviceService, "Device Management Service") {
+    Container(DeviceManagement, "Device Management", "Python, FastAPI", "Device lifecycle management, telemetry and monitoring")
+    ContainerDb(DeviceDB, "Device database", "PostgreSQL", "Stores device data")
+  }
+}
+
+System_Ext(api, "Third-Party API", "External API for device onboarding and fetch telemetry data")
+System_Ext(email, "Email provider", "External email delivery system")
+
+
+Rel(user, WebApp, "Uses the system")
+Rel(WebApp,UserManagement,"Makes API calls to", "https, json")
+Rel(WebApp,DeviceManagement,"Makes API calls to", "https, json")
+Rel(WebApp,ScenarioPlanning,"Makes API calls to", "https, json")
+Rel(UserManagement, UserDB, "Reads/Writes user data")
+Rel(Notification, email, "Uses for sending email")
+Rel(UserManagement, Notification, "Uses API")
+Rel(ScenarioPlanning, Notification, "Uses API")
+Rel(ScenarioPlanning, ScenarioDB, "Reads/Writes scenario data")
+Rel(DeviceManagement, DeviceDB, "Reads/Writes device data")
+Rel(DeviceManagement, api, "Makes API calls to", "https, json")
+Rel(ScenarioPlanning, messageQueue, "Kafka Subscription")
+Rel(DeviceManagement, messageQueue, "Kafka topic")
+
+
+@enduml 

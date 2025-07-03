@@ -1,0 +1,49 @@
+@startuml
+title WarmHouse Device Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class Device {
+  +String uid
+  +String name
+  +String description
+  +String location
+  +Map<string, string> settings
+  +List<Scenarios> scenarios
+  +void reset()
+  +void delete()
+  +void ping()
+  +update(config: DeviceConfig): void
+}
+
+class TelemetryData {
+  +String uid
+  +Float value
+  +String metric
+  +String unit
+  +Datetime timestamp
+  +Datetime received_at
+}
+
+class Scenarios {
+  +String uid
+  +String name
+  +String condition
+  +List<Action> action
+}
+
+class Action {
+  +String uid 
+  +String type
+  +String deviceId
+  +Map<string, any> parameters 
+  +Int delaySeconds
+}
+
+Device "1" -- "1" TelemetryData : has
+Device "1" -- "0..*" Scenarios : includes
+Scenarios "1" -- "1..*" Action : has
+
+@enduml

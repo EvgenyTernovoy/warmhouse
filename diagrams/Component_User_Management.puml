@@ -1,0 +1,32 @@
+@startuml
+title WarmHouse Device Service Component Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(UserManagement, "User Management Service", "Stores user data, authentication and registration")
+  ContainerDb(UserDB, "User database", "PostgreSQL", "Stores user data")
+}
+
+System_Ext(Notification, "Notification Service", "Sends emails to users")
+
+Container(UserManagement, "User Management Service", "Stores user data, authentication and registration") {
+  Component(APIController, "API Controller", "Handles incoming API requests")
+  Component(AuthenticationAndRegistrationService, "Authentication and Registration Service", "Business logic for authentication and registration")
+  Component(UserProfileService, "User Profile Service", "Handles user info editing and password changes")
+  Component(RepositoryLayer, "Repository Layer", "Data access logic")
+}
+
+
+Rel(APIController,AuthenticationAndRegistrationService,"Calls business logic")
+Rel(APIController,UserProfileService,"Calls business logic")
+Rel(AuthenticationAndRegistrationService, RepositoryLayer,"Reads/Writes data")
+Rel(UserProfileService, RepositoryLayer,"Reads/Writes data")
+Rel(RepositoryLayer,UserDB,"Reads/Writes user data")
+Rel(AuthenticationAndRegistrationService, Notification, "Sends confirmation email")
+Rel(UserProfileService, Notification, "Sends password change notification")
+
+
+@enduml

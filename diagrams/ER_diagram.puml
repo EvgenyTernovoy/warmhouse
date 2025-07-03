@@ -1,0 +1,75 @@
+@startuml
+title WarmHouse – ER Diagram (Device Management)
+
+entity Home {
+  * uid : UUID <<PK>>
+  --
+  user_id : UUID <<FK>>
+  location : varchar
+  name : varchar
+}
+
+
+entity User {
+  * uid : UUID <<PK>>
+  --
+  email : varchar
+  first_name: varchar
+  last_name: varchar
+  passwordHash: varchar
+}
+
+entity Room {
+  * uid : UUID <<PK>>
+  --
+  home_id: UUID <<FK>>
+  name: varchar
+  type: varchar
+}
+
+entity Device {
+  * uid : UUID <<PK>>
+  --
+  room_id : UUID <<FK>>
+  name : varchar
+  description : varchar
+  settings : json
+}
+
+entity TelemetryData {
+  * id : UUID <<PK>>
+  --
+  device_id : UUID <<FK>>
+  metric : varchar
+  value : float
+  unit : varchar
+  timestamp : datetime
+  received_at : datetime
+}
+
+entity Scenario {
+  * uid : UUID <<PK>>
+  --
+  device_id : UUID <<FK>>
+  name : varchar
+  condition : varchar
+}
+
+entity Action {
+  * id : UUID <<PK>>
+  --
+  scenario_id : UUID <<FK>>
+  type : varchar
+  device_id : UUID
+  parameters : json
+  delay_seconds : int
+}
+
+User ||--o{ Home : has
+Home ||--o{ Room : own
+Room ||--o{ Device : has
+Device ||--o{ Scenario : own
+Device ||--|| TelemetryData : own
+Scenario ||--o{ Action : has
+
+@enduml

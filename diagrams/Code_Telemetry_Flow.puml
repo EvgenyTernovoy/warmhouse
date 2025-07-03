@@ -1,0 +1,26 @@
+@startuml
+title WarmHouse – Telemetry Flow via Message Queue (Sequence Diagram)
+
+actor Device
+participant TelemetryIngestionService
+participant MessageQueue
+participant AutomationEngine
+participant DeviceRepository
+participant DeviceControlAPI
+
+Device -> TelemetryIngestionService : sendTelemetry(data)
+TelemetryIngestionService -> DeviceRepository : validateDevice(deviceId)
+DeviceRepository --> TelemetryIngestionService : valid / not found
+
+
+TelemetryIngestionService -> TelemetryIngestionService : normalize & enrich(data)
+TelemetryIngestionService -> DeviceRepository : insertTelemetryData(data)
+TelemetryIngestionService -> MessageQueue : publishTelemetryEvent(event)
+
+MessageQueue -> AutomationEngine : telemetryEvent
+AutomationEngine -> DeviceRepository : loadDeviceConfig(deviceId)
+AutomationEngine -> AutomationEngine : evaluateTriggers()
+AutomationEngine -> DeviceControlAPI : sendCommand(action)
+DeviceControlAPI -> Device : sendCommand(action)
+
+@enduml
