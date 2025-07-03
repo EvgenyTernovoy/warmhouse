@@ -1,0 +1,29 @@
+@startuml
+title WarmHouse Scenario Planning Component Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(ScenarioPlaning, "Scenario Planing Service", "Go", "Runs user-defined scenarios")
+  ContainerDb(ScenarioDB, "Scenario database", "PostgreSQL", "Stores scenario data")
+}
+
+System_Ext(messageQueue, "Message Queue", "Transports telemetry events for async processing")
+System_Ext(DeviceAPI, "Device Control API", "Sends commands to devices")
+System_Ext(Notification, "Notification Service", "Sends emails to users")
+
+Container(ScenarioPlaning, "Scenario Planning", "Python, FastAPI") {
+  Component(ScenarioAutomationEngine, "Scenario Automation engine", "Bussiness logic")
+  Component(RepositoryLayer, "Repository Layer", "Data access logic")
+}
+
+Rel(ScenarioAutomationEngine,messageQueue,"Kafka Subscription")
+Rel(ScenarioAutomationEngine, DeviceAPI, "Sends commands")
+Rel(ScenarioAutomationEngine, Notification, "Send notifications",)
+Rel(ScenarioAutomationEngine,RepositoryLayer,"Reads/Writes data")
+Rel(ScenarioAutomationEngine,RepositoryLayer,"Reads/Writes data")
+Rel(RepositoryLayer,ScenarioDB,"Reads/Writes user data")
+
+@enduml

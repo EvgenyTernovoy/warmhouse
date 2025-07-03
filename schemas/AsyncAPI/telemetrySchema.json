@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "telemetryReceived",
+  "namespace": "com.warmhouse",
+  "doc": "Device telemetry information",
+  "fields": [
+    { "name": "deviceId", "type": "string", "format": "uuid" },
+    { "name": "metric", "type": "string" },
+    { "name": "value", "type": "int" },
+    { "name": "unit", "type": "string" },
+    { "name": "timestamp", "type": "string", "format": "date-time" },
+    { "name": "received_at", "type": "string", "format": "date-time" }
+  ]
+}

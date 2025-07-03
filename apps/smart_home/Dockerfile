@@ -28,8 +28,5 @@ WORKDIR /app
 # Copy the binary from the builder stage
 COPY --from=builder /app/smarthome .
 
-# Expose the port the app runs on
-EXPOSE 8080
-
 # Command to run the application
 CMD ["./smarthome"]

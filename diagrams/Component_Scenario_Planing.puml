@@ -1,0 +1,24 @@
+@startuml
+title WarmHouse Scenario Planning Component Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(ScenarioPlaning, "Scenario Planing Service", "Python, FastAPI", "Edit user-defined scenarios")
+  ContainerDb(ScenarioDB, "Scenario database", "PostgreSQL", "Stores scenario data")
+}
+
+Container(ScenarioPlaning, "Scenario Planning", "Python, FastAPI") {
+  Component(ScenarioEditorController, "Scenario Editor Controller", "Allows user design scenario")
+  Component(ScenarioEditorService, "Scenario Editor Service", "Business logic for scenario configuring")
+  Component(RepositoryLayer, "Repository Layer", "Data access logic")
+}
+
+
+Rel(ScenarioEditorController,ScenarioEditorService,"Calls business logic")
+Rel(ScenarioEditorService,RepositoryLayer,"Reads/Writes data")
+Rel(RepositoryLayer,ScenarioDB,"Reads/Writes user data")
+
+@enduml

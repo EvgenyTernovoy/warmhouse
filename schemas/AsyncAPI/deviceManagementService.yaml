@@ -1,0 +1,25 @@
+asyncapi: 3.0.0
+info:
+  title: Device Management Service
+  version: 0.0.1
+  description: This service is in charge of send device telemetry changes data
+channels:
+  deviceTelemetry:
+    address: device/telemetry
+    messages:
+      telemetryChange:
+        $ref: '#/components/messages/telemetryChange'
+operations:
+  onTelemetryChange:
+    action: send
+    channel:
+      $ref: '#/channels/deviceTelemetry'
+    messages:
+      - $ref: '#/channels/deviceTelemetry/messages/telemetryChange'
+components:
+  messages:
+    telemetryChange:
+      payload:
+        schemaFormat: 'application/vnd.apache.avro;version=1.9.0'
+        schema:
+          $ref: './telemetrySchema.json'
