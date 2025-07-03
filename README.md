@@ -117,7 +117,9 @@
 
 ### 2. Документация API
 
-Файлы со схемами находятся в ./schemas
+[Openapi](https://github.com/EvgenyTernovoy/warmhouse/blob/warmhouse/schemas/openapi.yaml)
+[AsyncAPI Device Management Service](https://github.com/EvgenyTernovoy/warmhouse/blob/warmhouse/schemas/AsyncAPI/deviceManagementService.yaml)
+[AsyncAPI Scenario Planing Service](https://github.com/EvgenyTernovoy/warmhouse/blob/warmhouse/schemas/AsyncAPI/scenarioPlanningService.yaml)
 
 # Задание 5. Работа с docker и docker-compose
 
