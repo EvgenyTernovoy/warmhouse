@@ -13,7 +13,7 @@ Container_Boundary(WarmHouseSystem, "WarmHouse System") {
 Container(DeviceManagement, "Device Management", "Python, FastAPI") {
   Component(DeviceControlAPI, "Device control API", "Handles incoming API requests and sends command to device")
   Component(DeviceRegistrationController, "Device Registration Controller", "Allows user to connect device")
-  Component(DeviceConfigController, "Device Configuration Controller", "Allows user configuration device")
+  Component(DeviceConfigAndStateController, "Device Configuration And State Controller", "Allows user configuring device and change device state")
   Component(MonitoringController, "Device Monitoring Controller", "Allows user fetch monitoring data")
   Component(MonitoringService, "DeviceMonitoring Service", "Business logic for Monitoring")
   Component(TelemetryIngestionService, "Device Telemetry Ingestion Service", "Business logic for telemetry")
@@ -27,7 +27,7 @@ System_Ext(messageQueue, "Message Queue", "Transports telemetry events for async
 
 
 Rel(DeviceRegistrationController,DeviceProvisioningService,"Calls business logic")
-Rel(DeviceConfigController,DeviceConfigService,"Calls business logic")
+Rel(DeviceConfigAndStateController,DeviceConfigService,"Calls business logic")
 Rel(MonitoringController, MonitoringService,"Calls business logic")
 Rel(MonitoringService, RepositoryLayer,"Reads/Writes data")
 Rel(DeviceProvisioningService,RepositoryLayer,"Reads/Writes data")

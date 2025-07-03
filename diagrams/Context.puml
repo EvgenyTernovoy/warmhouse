@@ -8,7 +8,7 @@ top to bottom direction
 Person(user, "User", "A user of the WarmHouse application")
 System(WarmHouseSystem, "WarmHouse System", "System managing accounts, devices and scenarios")
 
-System_Ext(api, "Third-Party API", "External API for provisioning device data")
+System_Ext(api, "Third-Party API", "External API for provisioning device, fetch telemetry and send commands")
 System_Ext(email, "Email system", "External email system")
 
 Rel(user, WarmHouseSystem, "Uses the system")

@@ -22,6 +22,7 @@ Container_Boundary(WarmHouseSystem, "WarmHouse System") {
   
   Container_Boundary(ScenarioService, "Scenario Planning Service") { 
     Container(ScenarioPlanning, "Scenario Planning", "Python, FastAPI", "Edit and run user-defined scenarios")
+    Container(ScenarioAutomationEngine, "Scenario Automation Engine", "Run user-defined scenarios")
     ContainerDb(ScenarioDB, "Scenario database", "PostgreSQL", "Stores scenario config and data")
   }
   
@@ -44,12 +45,13 @@ Rel(WebApp,ScenarioPlanning,"Makes API calls to", "https, json")
 Rel(UserManagement, UserDB, "Reads/Writes user data")
 Rel(Notification, email, "Uses for sending email")
 Rel(UserManagement, Notification, "Uses API")
-Rel(ScenarioPlanning, Notification, "Uses API")
+Rel(ScenarioAutomationEngine, Notification, "Uses API")
 Rel(ScenarioPlanning, ScenarioDB, "Reads/Writes scenario data")
+Rel(ScenarioAutomationEngine, ScenarioDB, "Reads/Writes scenario data")
 Rel(DeviceManagement, DeviceDB, "Reads/Writes device data")
 Rel(DeviceManagement, api, "Makes API calls to", "https, json")
-Rel(ScenarioPlanning, messageQueue, "Kafka Subscription")
-Rel(DeviceManagement, messageQueue, "Kafka topic")
+Rel(ScenarioAutomationEngine, messageQueue, "Kafka Subscription")
+Rel(DeviceManagement, messageQueue, "Kafka Publish")
 
 
 @enduml 
